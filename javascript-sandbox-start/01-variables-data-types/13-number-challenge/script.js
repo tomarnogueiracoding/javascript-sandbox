@@ -1,6 +1,6 @@
-let x = Math.floor(Math.random() * 100) + 1;
+let x = Math.floor(Math.random() * 100 + 1);
 
-let y = Math.floor(Math.random() * 50) + 1;
+let y = Math.floor(Math.random() * 50 + 1);
 
 // Get the Sum
 const sum = x + y;
