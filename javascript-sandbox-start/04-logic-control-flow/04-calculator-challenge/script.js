@@ -1,25 +1,26 @@
 function calculator(num1, num2, operator) {
+  let result;
   switch (operator) {
     case '+':
-      return num1 + num2;
+      result = num1 + num2;
       break;
     case '-':
-      return num1 - num2;
+      result = num1 - num2;
       break;
     case '*':
-      return num1 * num2;
+      result = num1 * num2;
       break;
     case '/':
-      return num1 / num2;
+      result = num1 / num2;
       break;
     case '&':
-      return 'Calculation not allowed';
+      result = 'Calculation not allowed';
       break;
     default:
-      return 'Please choose a valid operator';
+      result = 'Please choose a valid operator';
   }
+  console.log(result);
+  return result;
 }
 
-const result = calculator(5, 2, '%');
-
-console.log(result);
+calculator(5, 2, '+');
