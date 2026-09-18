@@ -3,7 +3,6 @@ const itemInput = document.querySelector('#item-input');
 const itemList = document.querySelector('#item-list');
 const clearBtn = document.querySelector('#clear');
 const itemFilter = document.querySelector('#filter');
-const items = itemList.querySelectorAll('li');
 
 function addItem(e) {
   e.preventDefault();
@@ -23,7 +22,10 @@ function addItem(e) {
 
   const button = createButton('remove-item btn-link text-red');
   listItem.appendChild(button);
+
+  // Add li (item) to the DOM
   itemList.appendChild(listItem);
+  checkUI();
 
   itemInput.value = '';
 }
@@ -44,19 +46,29 @@ function createIcon(classes) {
 
 function removeItem(e) {
   if (e.target.parentElement.classList.contains('remove-item')) {
-    e.target.parentElement.parentElement.remove();
+    if (confirm('Confirma que quer remover o artigo?')) {
+      e.target.parentElement.parentElement.remove();
+    }
   }
+  checkUI();
 }
 
 function clearItems(e) {
   const items = itemList.querySelectorAll('li');
-  items.forEach((item) => item.remove());
+  if (confirm('Tem a certeza que quer apagar todos os artigos?')) {
+    items.forEach((item) => item.remove());
+  }
+  checkUI();
 }
 
 function checkUI() {
+  const items = itemList.querySelectorAll('li');
   if (items.length === 0) {
     clearBtn.style.display = 'none';
     itemFilter.style.display = 'none';
+  } else {
+    clearBtn.style.display = 'block';
+    itemFilter.style.display = 'block';
   }
 }
 
