@@ -17,6 +17,8 @@ function onAddItemSubmit(e) {
     return;
   }
 
+  newItem = newItem[0].toUpperCase() + newItem.slice(1);
+
   // Check for edit mode
   if (isEditMode) {
     const itemToEdit = itemList.querySelector('.edit-mode');
@@ -24,9 +26,12 @@ function onAddItemSubmit(e) {
     itemToEdit.classList.remove('edit-mode');
     itemToEdit.remove();
     isEditMode = false;
+  } else {
+    if (checkIfItemExists(newItem)) {
+      alert('That item already exists');
+      return;
+    }
   }
-
-  newItem = newItem[0].toUpperCase() + newItem.slice(1, newItem.length);
 
   addItemToDOM(newItem);
   addItemToStorage(newItem);
@@ -93,6 +98,11 @@ function onClickItem(e) {
   }
 }
 
+function checkIfItemExists(item) {
+  const itemsFromStorage = getItemsFromStorage();
+  return itemsFromStorage.includes(item);
+}
+
 function setItemToEdit(item) {
   isEditMode = true;
 
@@ -132,10 +142,8 @@ function clearItems(e) {
   const items = itemList.querySelectorAll('li');
   if (confirm('Tem a certeza que quer apagar todos os artigos?')) {
     items.forEach((item) => item.remove());
+    localStorage.removeItem('items');
   }
-
-  // Clear from localStorage
-  localStorage.removeItem('items');
 
   checkUI();
 }
