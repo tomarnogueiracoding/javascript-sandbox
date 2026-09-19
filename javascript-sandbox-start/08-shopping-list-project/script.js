@@ -74,13 +74,32 @@ function getItemsFromStorage() {
   return itemsFromStorage;
 }
 
-function removeItem(e) {
+function onClickItem(e) {
   if (e.target.parentElement.classList.contains('remove-item')) {
-    if (confirm('Confirma que quer remover o artigo?')) {
-      e.target.parentElement.parentElement.remove();
-    }
+    removeItem(e.target.parentElement.parentElement);
   }
-  checkUI();
+}
+
+function removeItem(item) {
+  if (confirm('Confirma que quer remover o artigo?')) {
+    // remove item from DOM
+    item.remove();
+
+    // remove item from storage
+    removeItemFromStorage(item.textContent);
+
+    checkUI();
+  }
+}
+
+function removeItemFromStorage(item) {
+  let itemsFromStorage = getItemsFromStorage();
+
+  // filter out item to be remove
+  itemsFromStorage = itemsFromStorage.filter((el) => el !== item);
+
+  // re-set to local storage
+  localStorage.setItem('items', JSON.stringify(itemsFromStorage));
 }
 
 function clearItems(e) {
@@ -88,6 +107,10 @@ function clearItems(e) {
   if (confirm('Tem a certeza que quer apagar todos os artigos?')) {
     items.forEach((item) => item.remove());
   }
+
+  // Clear from localStorage
+  localStorage.removeItem('items');
+
   checkUI();
 }
 
@@ -129,7 +152,7 @@ function displayItems() {
 function init() {
   // Event Listeners
   itemForm.addEventListener('submit', onAddItemSubmit);
-  itemList.addEventListener('click', removeItem);
+  itemList.addEventListener('click', onClickItem);
   clearBtn.addEventListener('click', clearItems);
   itemFilter.addEventListener('input', filterItems);
   document.addEventListener('DOMContentLoaded', displayItems);
