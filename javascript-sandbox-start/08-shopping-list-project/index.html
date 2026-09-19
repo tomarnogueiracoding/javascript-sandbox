@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -12,27 +12,29 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="style.css" />
-    <title>Shopping List</title>
+    <script src="script.js" defer></script>
+    <title>Lista de Compras</title>
   </head>
   <body>
     <div class="container">
       <header>
-        <img src="images/note.png" alt="" />
-        <h1>Shopping List</h1>
+        <img src="images/note.png" alt="logo" />
+        <h1>Lista de Compras</h1>
       </header>
+
       <form id="item-form">
         <div class="form-control">
           <input
             type="text"
             class="form-input"
-            id="item-input"
             name="item"
-            placeholder="Enter Item"
+            id="item-input"
+            placeholder="Novo Artigo"
           />
         </div>
         <div class="form-control">
           <button type="submit" class="btn">
-            <i class="fa-solid fa-plus"></i> Add Item
+            <i class="fa-solid fa-plus"></i> Adicionar artigo
           </button>
         </div>
       </form>
@@ -42,40 +44,13 @@
           type="text"
           class="form-input-filter"
           id="filter"
-          placeholder="Filter Items"
+          placeholder="Filtrar artigos"
         />
       </div>
 
-      <ul id="item-list" class="items">
-        <li>
-          Apples
-          <button class="remove-item btn-link text-red">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </li>
-        <li>
-          Orange Juice
-          <button class="remove-item btn-link text-red">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </li>
-        <li>
-          Oreos
-          <button class="remove-item btn-link text-red">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </li>
-        <li>
-          Milk
-          <button class="remove-item btn-link text-red">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </li>
-      </ul>
+      <ul id="item-list" class="items"></ul>
 
-      <button id="clear" class="btn-clear">Clear All</button>
+      <button id="clear" class="btn-clear">Apagar Tudo</button>
     </div>
-
-    <script src="script.js"></script>
   </body>
 </html>
