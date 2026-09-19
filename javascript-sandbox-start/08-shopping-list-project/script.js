@@ -4,7 +4,7 @@ const itemList = document.querySelector('#item-list');
 const clearBtn = document.querySelector('#clear');
 const itemFilter = document.querySelector('#filter');
 
-function addItem(e) {
+function onAddItemSubmit(e) {
   e.preventDefault();
 
   let newItem = itemInput.value;
@@ -17,20 +17,26 @@ function addItem(e) {
 
   newItem = newItem[0].toUpperCase() + newItem.slice(1, newItem.length);
 
+  addItemToDOM(newItem);
+  addItemToStorage(newItem);
+
+  checkUI();
+
+  itemInput.value = '';
+
+  filterItems();
+}
+
+function addItemToDOM(item) {
   // Create list item
   const listItem = document.createElement('li');
-  listItem.appendChild(document.createTextNode(newItem));
+  listItem.appendChild(document.createTextNode(item));
 
   const button = createButton('remove-item btn-link text-red');
   listItem.appendChild(button);
 
   // Add li (item) to the DOM
   itemList.appendChild(listItem);
-  checkUI();
-
-  itemInput.value = '';
-
-  filterItems();
 }
 
 function createButton(classes) {
@@ -45,6 +51,27 @@ function createIcon(classes) {
   const icon = document.createElement('i');
   icon.className = classes;
   return icon;
+}
+
+function addItemToStorage(item) {
+  const itemsFromStorage = getItemsFromStorage();
+
+  // Add new item to array
+  itemsFromStorage.push(item);
+
+  // Convert to JSON string and set to local storage
+  localStorage.setItem('items', JSON.stringify(itemsFromStorage));
+}
+
+function getItemsFromStorage() {
+  let itemsFromStorage;
+  if (localStorage.getItem('items') === null) {
+    itemsFromStorage = [];
+  } else {
+    itemsFromStorage = JSON.parse(localStorage.getItem('items'));
+  }
+
+  return itemsFromStorage;
 }
 
 function removeItem(e) {
@@ -90,12 +117,19 @@ function checkUI() {
   }
 }
 
+function displayItems() {
+  const itemsFromStorage = getItemsFromStorage();
+  itemsFromStorage.forEach((item) => {
+    addItemToDOM(item);
+  });
+  checkUI();
+}
+
 // Event Listeners
-itemForm.addEventListener('submit', addItem);
+itemForm.addEventListener('submit', onAddItemSubmit);
 itemList.addEventListener('click', removeItem);
 clearBtn.addEventListener('click', clearItems);
 itemFilter.addEventListener('input', filterItems);
+document.addEventListener('DOMContentLoaded', displayItems);
 
 checkUI();
-
-console.log('connected');
