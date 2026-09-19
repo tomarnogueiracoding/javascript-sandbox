@@ -8,13 +8,14 @@ function addItem(e) {
   e.preventDefault();
 
   let newItem = itemInput.value;
-  newItem = newItem[0].toUpperCase() + newItem.slice(1, newItem.length);
 
   // Validate input
   if (newItem === '') {
     alert('Please add an item');
     return;
   }
+
+  newItem = newItem[0].toUpperCase() + newItem.slice(1, newItem.length);
 
   // Create list item
   const listItem = document.createElement('li');
@@ -28,6 +29,8 @@ function addItem(e) {
   checkUI();
 
   itemInput.value = '';
+
+  filterItems();
 }
 
 function createButton(classes) {
@@ -61,14 +64,28 @@ function clearItems(e) {
   checkUI();
 }
 
+function filterItems(e) {
+  const items = itemList.querySelectorAll('li');
+  const text = itemFilter.value.toLowerCase();
+
+  items.forEach((item) => {
+    const matchedText = item.innerText.toLowerCase().includes(text);
+    if (matchedText) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
 function checkUI() {
   const items = itemList.querySelectorAll('li');
   if (items.length === 0) {
     clearBtn.style.display = 'none';
     itemFilter.style.display = 'none';
   } else {
-    clearBtn.style.display = 'block';
-    itemFilter.style.display = 'block';
+    clearBtn.style.display = '';
+    itemFilter.style.display = '';
   }
 }
 
@@ -76,5 +93,8 @@ function checkUI() {
 itemForm.addEventListener('submit', addItem);
 itemList.addEventListener('click', removeItem);
 clearBtn.addEventListener('click', clearItems);
+itemFilter.addEventListener('input', filterItems);
 
 checkUI();
+
+console.log('connected');
