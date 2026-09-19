@@ -69,8 +69,9 @@ function filterItems(e) {
   const text = itemFilter.value.toLowerCase();
 
   items.forEach((item) => {
-    const matchedText = item.innerText.toLowerCase().includes(text);
-    if (matchedText) {
+    const itemName = item.firstChild.textContent.toLowerCase();
+
+    if (itemName.includes(text)) {
       item.style.display = '';
     } else {
       item.style.display = 'none';
