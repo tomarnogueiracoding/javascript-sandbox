@@ -2,12 +2,32 @@ function Rectangle(name, width, height) {
   this.name = name;
   this.width = width;
   this.height = height;
-  this.area = function () {
-  	return this.width * this.height;
-  };
 }
 
+Rectangle.prototype.area = function () {
+  return this.width * this.height;
+};
 
-const rect = new Rectangle('Rect', 10, 10);
+Rectangle.prototype.perimenter = function () {
+  return 2 * (this.width + this.height);
+};
+
+Rectangle.prototype.isSquare = function () {
+  return this.width === this.height;
+};
+
+Rectangle.prototype.changeName = function (newName) {
+  return (this.name = newName);
+};
+
+const rect = new Rectangle('Rect', 10, 20);
+const rect2 = new Rectangle('Rect 2', 30, 40);
 
 console.log(rect);
+console.log(rect.area());
+console.log(rect.perimenter());
+console.log(rect.isSquare());
+rect.changeName('newRect');
+console.log(rect.name);
+
+console.log(rect2.area());
