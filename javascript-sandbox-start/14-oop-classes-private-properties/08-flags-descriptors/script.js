@@ -2,3 +2,27 @@
 // [[Enumerable]] - if `true`, the property will be returned in a `for...in` loop, otherwise not
 // [[Writable]] - if `true`, the value of the property can be changed, otherwise not
 // [[Value]] - the value of the property
+
+Math.PI = 4;
+console.log(Math.PI);
+
+let descriptor = Object.getOwnPropertyDescriptor(Math, 'PI');
+
+const recObj = {
+  name: 'Rectangle 1',
+  width: 10,
+  height: 10,
+};
+
+Object.defineProperty(recObj, 'name', {
+  writable: false,
+  configurable: false,
+  enumerable: false,
+});
+
+descriptor = Object.getOwnPropertyDescriptor(recObj, 'name');
+console.log(descriptor);
+
+recObj.name = 'new Name';
+delete recObj.name;
+console.log(recObj.name);
